@@ -4,8 +4,15 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactSwipe = require('../react-swipe');
 
+var CustomElement = React.createClass({
+  getDefaultProps: function(){ return {style: {}}},
+  render: function(){
+    return React.createElement('div', {style: this.props.style}, this.props.children)
+  }
+})
+
 var Panes = Array.apply(null, Array(20)).map(function (_, i) {
-  return React.createElement('div', {key: i},
+  return React.createElement(CustomElement, {key: i},
       React.createElement('b', null, i)
   );
 });
@@ -31,7 +38,8 @@ var Page = React.createClass({
         React.createElement('div', {style: {textAlign: 'center'}},
           React.createElement('button', {onClick: this.prev}, 'Prev'),
           React.createElement('button', {onClick: this.next}, 'Next')
-        )
+        ),
+        React.createElement(CustomElement, null, "I shouldn't be styled")
       )
     );
   }
